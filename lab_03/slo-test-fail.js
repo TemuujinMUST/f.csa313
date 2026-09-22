@@ -7,7 +7,7 @@ export const options = {
     'http_req_duration{name:cart}': ['p(95)<20'], // Performance SLO
     'http_req_failed{name:pay}': ['rate<0.08'], // Reliability SLO
     'checks': ['rate>0.90'], // Availability SLO
-    'http_req_duration{name:report}': ['p(95)<100'], // Нэмэлт сценарио: report endpoint-ийн саатал 200-400мс тул 450 нь бага зэрэг дээгүүр босго
+    'http_req_duration{name:report}': ['p(95)<100'], // Санаатай хэт хатуу: сервер 200мс-ээс хурдан хариулдаггүй тул энэ FAIL болно
   }
 }
 
