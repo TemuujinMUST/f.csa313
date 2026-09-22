@@ -3,7 +3,7 @@ const app = express()
 const port = 3000
 const sleep = (ms) => new Promise(r => setTimeout(r, ms))
 
-app.post('/card/add', (req, res) => {
+app.post('/cart/add', (req, res) => {
   res.json({ ok: true, items: 1 })
 })
 
