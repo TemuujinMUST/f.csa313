@@ -5,7 +5,7 @@ public class GradeCalculator {
                     "Нийлбэр оноо 0-100 хооронд байх ёстой");
         }
 
-        if (score > 90) {
+        if (score >= 90) {
             return "A";
         } else if (score >= 80) {
             return "B";
