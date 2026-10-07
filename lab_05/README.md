@@ -70,3 +70,10 @@ newman -v
 - Collection: `lab05-collection.json`
 - assertions executed: 24, assertions failed: 0
 - **Exit code: 0** (бүх тест PASS)
+
+### FAIL
+- Файл: `results/newman-fail.txt`
+- Collection: `lab05-collection-fail.json`
+- Folder 01-ийн статус oracle-ыг 201-ээс 200 болгож зориуд буруу хийсэн.
+- assertions executed: 24, assertions failed: 1
+- **Exit code: 1**

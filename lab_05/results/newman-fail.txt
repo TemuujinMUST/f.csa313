@@ -1,0 +1,142 @@
+(node:37008) [DEP0176] DeprecationWarning: fs.F_OK is deprecated, use fs.constants.F_OK instead
+(Use `node --trace-deprecation ...` to show where the warning was created)
+newman
+
+F.CSA313 Lab_05 Fail run
+
+❏ 01 Идэвхтэй оюутан, урьдач хангасан үед бүртгүүлэхэд 201 OK
+↳ Setup: оюутан S-ACTIVE (active, үзсэн ['CS201'])
+  PUT http://localhost:3000/students/S-ACTIVE [200 OK, 178B, 21ms]
+
+↳ Setup: хичээл CS313 (урьдач ['CS201'])
+  PUT http://localhost:3000/courses/CS313 [200 OK, 178B, 1ms]
+
+↳ POST: бүртгэл амжилттай
+  POST http://localhost:3000/registrations [201 Created, 202B, 1ms]
+  1. Статус 201
+  ✓  result == OK, registrationID тоо
+
+❏ 02 Байхгүй оюутан бүртгүүлэхэд ERROR_NO_STUDENT
+↳ Setup: хичээл CS313 (урьдач ['CS201'])
+  PUT http://localhost:3000/courses/CS313 [200 OK, 178B, 1ms]
+
+↳ POST: оюутан байхгүй
+  POST http://localhost:3000/registrations [200 OK, 192B, 1ms]
+  ✓  Статус 200
+  ✓  result == ERROR_NO_STUDENT
+
+❏ 03 Идэвхгүй оюутан бүртгүүлэхэд ERROR_INACTIVE_STUDENT
+↳ Setup: оюутан S-INACTIVE (inactive, үзсэн ['CS201'])
+  PUT http://localhost:3000/students/S-INACTIVE [200 OK, 178B, 1ms]
+
+↳ Setup: хичээл CS313 (урьдач ['CS201'])
+  PUT http://localhost:3000/courses/CS313 [200 OK, 178B, 1ms]
+
+↳ POST: оюутан идэвхгүй
+  POST http://localhost:3000/registrations [200 OK, 198B, 1ms]
+  ✓  Статус 200
+  ✓  result == ERROR_INACTIVE_STUDENT
+
+❏ 04 Байхгүй хичээлд бүртгүүлэхэд ERROR_NO_COURSE
+↳ Setup: оюутан S-ACTIVE (active, үзсэн ['CS201'])
+  PUT http://localhost:3000/students/S-ACTIVE [200 OK, 178B, 2ms]
+
+↳ POST: хичээл байхгүй
+  POST http://localhost:3000/registrations [200 OK, 191B, 1ms]
+  ✓  Статус 200
+  ✓  result == ERROR_NO_COURSE
+
+❏ 05 Урьдач нөхцөл дутуу үед ERROR_PREREQUISITES
+↳ Setup: оюутан S-ACTIVE (active, үзсэн [])
+  PUT http://localhost:3000/students/S-ACTIVE [200 OK, 178B, 1ms]
+
+↳ Setup: хичээл CS313 (урьдач ['CS201'])
+  PUT http://localhost:3000/courses/CS313 [200 OK, 178B, 1ms]
+
+↳ POST: урьдач огт үзээгүй
+  POST http://localhost:3000/registrations [200 OK, 215B, 1ms]
+  ✓  Статус 200
+  ✓  result == ERROR_PREREQUISITES
+  ✓  missing жагсаалт зөв
+
+❏ 06 Давхар алдаа: идэвхгүй оюутан + урьдач дутуу үед ERROR_INACTIVE_STUDENT
+↳ Setup: оюутан S-INACTIVE (inactive, үзсэн [])
+  PUT http://localhost:3000/students/S-INACTIVE [200 OK, 178B, 1ms]
+
+↳ Setup: хичээл CS313 (урьдач ['CS201'])
+  PUT http://localhost:3000/courses/CS313 [200 OK, 178B, 1ms]
+
+↳ POST: идэвхгүй + урьдач дутуу
+  POST http://localhost:3000/registrations [200 OK, 198B, 1ms]
+  ✓  Статус 200
+  ✓  result == ERROR_INACTIVE_STUDENT
+
+❏ 07 Давхар алдаа: байхгүй оюутан + байхгүй хичээл үед ERROR_NO_STUDENT
+↳ POST: оюутан ч хичээл ч байхгүй
+  POST http://localhost:3000/registrations [200 OK, 192B, 1ms]
+  ✓  Статус 200
+  ✓  result == ERROR_NO_STUDENT
+
+❏ 08 Урьдачийн зарим нь үзсэн үед missing зөвхөн дутууг жагсаана
+↳ Setup: оюутан S-ACTIVE (active, үзсэн ['CS201'])
+  PUT http://localhost:3000/students/S-ACTIVE [200 OK, 178B, 1ms]
+
+↳ Setup: хичээл CS313 (урьдач ['CS201', 'CS202'])
+  PUT http://localhost:3000/courses/CS313 [200 OK, 178B, 1ms]
+
+↳ POST: зарим урьдач дутуу
+  POST http://localhost:3000/registrations [200 OK, 215B, 1ms]
+  ✓  Статус 200
+  ✓  result == ERROR_PREREQUISITES
+  ✓  missing жагсаалт зөв
+
+❏ 09 Урьдачгүй хичээлд хоосон coursesTaken-тэй оюутан бүртгүүлэхэд 201 OK
+↳ Setup: оюутан S-ACTIVE (active, үзсэн [])
+  PUT http://localhost:3000/students/S-ACTIVE [200 OK, 178B, 0µs]
+
+↳ Setup: хичээл CS100 (урьдач [])
+  PUT http://localhost:3000/courses/CS100 [200 OK, 178B, 1ms]
+
+↳ POST: урьдачгүй хичээл
+  POST http://localhost:3000/registrations [201 Created, 203B, 1ms]
+  ✓  Статус 201
+  ✓  result == OK, registrationID тоо
+
+❏ 10 courseID талбар дутуу үед 400 ERROR_BAD_REQUEST
+↳ POST: courseID дутуу
+  POST http://localhost:3000/registrations [400 Bad Request, 202B, 1ms]
+  ✓  Статус 400
+  ✓  result == ERROR_BAD_REQUEST
+
+❏ 11 Буруу JSON илгээхэд 400 ERROR_BAD_JSON
+↳ POST: буруу JSON бие
+  POST http://localhost:3000/registrations [400 Bad Request, 199B, 2ms]
+  ✓  Статус 400
+  ✓  result == ERROR_BAD_JSON
+
+┌─────────────────────────┬─────────────────┬─────────────────┐
+│                         │        executed │          failed │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              iterations │               1 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│                requests │              25 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│            test-scripts │              11 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│      prerequest-scripts │               0 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              assertions │              24 │               1 │
+├─────────────────────────┴─────────────────┴─────────────────┤
+│ total run duration: 287ms                                   │
+├─────────────────────────────────────────────────────────────┤
+│ total data received: 596B (approx)                          │
+├─────────────────────────────────────────────────────────────┤
+│ average response time: 1ms [min: 1ms, max: 21ms, s.d.: 4ms] │
+└─────────────────────────────────────────────────────────────┘
+
+[31m  # [39m[31m failure        [39m[31m detail                                                                                         [39m
+[90m    [39m[90m                [39m[90m                                                                                                [39m
+ 1.  AssertionError  Статус 201                                                                                     
+                     expected response to have status code 200 but got 201                                          
+                     at assertion:0 in test-script                                                                  
+                     inside "01 Идэвхтэй оюутан, урьдач хангасан үед бүртгүүлэхэд 201 OK / POST: бүртгэл амжилттай" 
