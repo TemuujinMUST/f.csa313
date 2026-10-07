@@ -62,3 +62,11 @@ newman -v
 | 9 | **Хязгаар:** урьдачгүй хичээл, хоосон coursesTaken | `S-ACTIVE` active `[]`; `CS100` урьдач `[]` | `S-ACTIVE`, `CS100` | 201 | `OK` |
 | 10 | **Хязгаар:** courseID талбар дутуу | (setup шаардлагагүй) | `{"studentID":"S-ACTIVE"}` | 400 | `ERROR_BAD_REQUEST` |
 | 11 | **Хязгаар:** буруу JSON | (setup шаардлагагүй) | `{bad` (raw текст) | 400 | `ERROR_BAD_JSON` |
+
+## Даалгавар 4: Newman-ийн үр дүн
+
+### PASS
+- Файл: `results/newman-pass.txt`
+- Collection: `lab05-collection.json`
+- assertions executed: 24, assertions failed: 0
+- **Exit code: 0** (бүх тест PASS)
