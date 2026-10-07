@@ -77,3 +77,10 @@ newman -v
 - Folder 01-ийн статус oracle-ыг 201-ээс 200 болгож зориуд буруу хийсэн.
 - assertions executed: 24, assertions failed: 1
 - **Exit code: 1**
+
+### DOWN
+- Файл: `results/newman-down.txt`
+- Collection: `lab05-collection.json` (сервер унтарсан)
+- Гаралтад `ECONNREFUSED` мөр гарсан.
+- **Exit code: 1**
+- Энэ бол интерфейсийн алдаа (API-тай холбогдож чадаагүй), oracle-ийн алдаа биш (API хариулсан боловч хариу нь хүлээлттэй таарахгүй).
