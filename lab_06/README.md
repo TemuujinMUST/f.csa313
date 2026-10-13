@@ -69,3 +69,33 @@
 **324 → 13**
 
 Үлдсэн 13 тест: 9 ERROR + 2 happy path (Normal, Same/Different, Empty) + ExactBalance (Different) + Partial (Normal).
+
+### A3: Спецификацийн хүснэгт
+
+Статус: амжилттай бол `201 {"result":"OK"}`, оролтын алдаа бол `200 {"result":"ERROR_..."}`. Бусад сонголтыг анхдагч утгаар (from = Valid, to = Valid, amount = Normal, currency = Same, лимит = Empty) авсан.
+
+| № | from | to | amount | currency | Лимит | Төрөл | Хүлээгдэх үр дүн |
+|---|---|---|---|---|---|---|---|
+| 1 | Valid | Valid | Normal | Same | Empty | Happy path | 201 `OK` |
+| 2 | Valid | Valid | Normal | Different | Empty | Happy path (хөрвүүлэлттэй) | 201 `OK` |
+| 3 | Valid | Valid | ExactBalance | Different | Empty | SINGLE (захын тохиолдол) | 201 `OK` |
+| 4 | Valid | Valid | Normal | Same | Partial | SINGLE (хуримтлагдсан лимит) | 201 `OK` |
+| 5 | **Frozen** | Valid | Normal | Same | Empty | ERROR | 200 `ERROR_FROZEN` |
+| 6 | **Missing** | Valid | Normal | Same | Empty | ERROR | 200 `ERROR_NO_FROM` |
+| 7 | Valid | **Missing** | Normal | Same | Empty | ERROR | 200 `ERROR_NO_TO` |
+| 8 | Valid | **SameAsFrom** | Normal | Same | Empty | ERROR | 200 `ERROR_SAME_ACCOUNT` |
+| 9 | Valid | Valid | **Negative** | Same | Empty | ERROR | 200 `ERROR_BAD_AMOUNT` |
+| 10 | Valid | Valid | **Zero** | Same | Empty | ERROR (хязгаар) | 200 `ERROR_BAD_AMOUNT` |
+| 11 | Valid | Valid | **OverBalance** | Same | Empty | ERROR | 200 `ERROR_INSUFFICIENT` |
+| 12 | Valid | Valid | **OverLimit** | Same | Empty | ERROR | 200 `ERROR_LIMIT` |
+| 13 | Valid | Valid | Normal | Same | **Full** | ERROR (далд орчин) | 200 `ERROR_LIMIT` |
+| 14 | **Frozen** | **Missing** | Normal | Same | Empty | Давхар нөхцөл | 200 `ERROR_FROZEN` |
+| 15 | Valid | **SameAsFrom** | **Zero** | Same | Empty | Давхар нөхцөл | 200 `ERROR_SAME_ACCOUNT` |
+| 16 | Valid | Valid | **OverBalance** | Same | **Full** | Давхар нөхцөл | 200 `ERROR_INSUFFICIENT` |
+
+**Давхар нөхцөлийн үндэслэл** (дээрх давуу эрэмбээр):
+- **14:** from Frozen ба to Missing хоёулаа алдаатай. FROZEN нь NO_TO-оос өмнө шалгагддаг тул `ERROR_FROZEN` буцна.
+- **15:** to нь SameAsFrom, амount нь Zero хоёулаа алдаатай. Дансны шалгалт (SAME_ACCOUNT) дүнгийн шалгалтаас (BAD_AMOUNT) өмнө байдаг тул `ERROR_SAME_ACCOUNT` буцна.
+- **16:** дүн нь үлдэгдлээс их, лимит нь дүүрсэн. INSUFFICIENT нь LIMIT-ээс өмнө шалгагддаг тул `ERROR_INSUFFICIENT` буцна.
+
+**Тооны тайлбар:** A2-ын 13 тест (мөр 1-13) дээр 3 давхар нөхцөлийн мөр (14-16) нэмсэн, нийт 16 спецификаци. A2-ын "324 → 13" тоо нь зөвхөн нэг алдаатай тестүүдийг тоолсон тул давхар нөхцөлийн мөрүүд түүнд ороогүй.
