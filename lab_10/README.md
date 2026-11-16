@@ -66,3 +66,30 @@ CFG-ийн ирмэгүүд: 13→15, 15→16 (T), 16→17, 17→18, 18→15 (б
 - 35–37 ба 40–41-р мөр үргэлж дараалан ажилладаг тул тус бүр нэг үндсэн блок (basic block) болгосон.
 - 32-р мөрийн `attendance == null || threshold < 0` нь short-circuit тул 32a (attendance-ийн p-use), 32b (threshold-ийн p-use) гэж хоёр шийдвэрт хуваасан. 32b зөвхөн `attendance != null` үед хүрнэ.
 - 38-р мөрийн for-each: 38c = нөхцөл (attendance-д дараагийн элемент байна уу — attendance-ийн p-use), 38a = алхам (дараагийн элементийг `a`-д оноох — `a`-ийн def).
+
+### B2. Def/Use жагсаалт
+
+| Мөр | Код | Def | c-use | p-use |
+|-----|-----|-----|-------|-------|
+| 31 | `bonus(int[] attendance, int threshold)` | attendance, threshold | — | — |
+| 32a | `attendance == null` | — | — | attendance |
+| 32b | `threshold < 0` | — | — | threshold |
+| 35 | `int present = 0;` | present | — | — |
+| 36 | `int streak = 0;` | streak | — | — |
+| 37 | `int best = 0;` | best | — | — |
+| 38c | `for (int a : attendance)` нөхцөл | — | — | attendance |
+| 38a | `for (int a : attendance)` алхам | a | — | — |
+| 39 | `if (a > 0)` | — | — | a |
+| 40 | `present = present + 1;` | present | present | — |
+| 41 | `streak = streak + 1;` | streak | streak | — |
+| 42 | `if (streak > best)` | — | — | streak, best |
+| 43 | `best = streak;` | best | streak | — |
+| 46 | `streak = 0;` | streak | — | — |
+| 49 | `int score = 0;` | score | — | — |
+| 50 | `if (present >= threshold)` | — | — | present, threshold |
+| 51 | `score = 5;` | score | — | — |
+| 53 | `if (best >= 5)` | — | — | best |
+| 54 | `score = score + 3;` | score | score | — |
+| 56 | `return score;` | — | score | — |
+
+Нийт 13 def: attendance(31), threshold(31), present(35, 40), streak(36, 41, 46), best(37, 43), a(38a), score(49, 51, 54).
