@@ -71,4 +71,10 @@ class BonusTest {
     void bonus_streak5AtThreshold_returns8() {
         assertEquals(8, DataFlowTargets.bonus(new int[] { 1, 1, 1, 1, 1 }, 5));
     }
+
+    @Test
+    @DisplayName("B9: [1,1,0,1,1,1], threshold 5 -> 5. Kills M2 (present != streak when best is updated)")
+    void bonus_fiveDaysSplitByAbsence_returns5() {
+        assertEquals(5, DataFlowTargets.bonus(new int[] { 1, 1, 0, 1, 1, 1 }, 5));
+    }
 }
