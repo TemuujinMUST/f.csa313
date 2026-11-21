@@ -123,4 +123,22 @@ public class ScholarshipCalculatorTest {
     void scholarship_lowGpa_is0() {
         assertEquals(0, calc.scholarship(2.5, 10, false));
     }
+
+    // Part C
+
+    @Test
+    void gpa_loopZero_emptyAndNull_throw() {
+        assertThrows(IllegalArgumentException.class, () -> calc.gpa(new double[] {}));
+        assertThrows(IllegalArgumentException.class, () -> calc.gpa(null));
+    }
+
+    @Test
+    void gpa_loopOne_singleScore_is4() {
+        assertEquals(4.0, calc.gpa(new double[] { 95 }), 1e-9);
+    }
+
+    @Test
+    void gpa_loopMany_fourScores_is2point5() {
+        assertEquals(2.5, calc.gpa(new double[] { 95, 85, 75, 65 }), 1e-9);
+    }
 }
